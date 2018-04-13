@@ -60,3 +60,4 @@ gem 'devise'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'foreman'
+gem "haml-rails", "~> 1.0"
