@@ -1,15 +1,21 @@
 {
   "name": "pm_app",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --loader:.png=file --loader:.jpg=file --loader:.svg=file --loader:.woff=file --loader:.woff2=file --loader:.ttf=file --loader:.eot=file",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+  },
   "dependencies": {
-    "@rails/webpacker": "3.4",
-    "axios": "^0.18.0",
-    "vue": "^2.5.16",
-    "vue-loader": "^14.2.2",
-    "vue-template-compiler": "^2.5.16",
-    "vuetify": "^1.0.14"
+    "@mdi/font": "^7.4.47",
+    "axios": "^1.7.7",
+    "esbuild": "^0.20.0",
+    "sass": "^1.70.0",
+    "vue": "^3.5.12",
+    "vuetify": "^3.7.4"
   },
   "devDependencies": {
-    "webpack-dev-server": "2.11.2"
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.4.11"
   }
 }
