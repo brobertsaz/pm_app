@@ -1,0 +1,65 @@
+%table{cellpadding: '0', cellspacing: '0', style: 'width: 100%; font-family: Arial, sans-serif;'}
+  %tbody
+    %tr
+      %td{style: 'background-color: #f5f5f5; padding: 40px 0; text-align: center;'}
+        %table{cellpadding: '0', cellspacing: '0', style: 'width: 100%; max-width: 600px; margin: 0 auto; background-color: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'}
+          %tbody
+            / Header
+            %tr
+              %td{style: 'background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%); padding: 40px; text-align: center; color: white;'}
+                %h1{style: 'margin: 0; font-size: 28px; font-weight: bold;'}
+                  Task Completed
+                %p{style: 'margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;'}
+                  Great work! A task has been marked as complete
+
+            / Content
+            %tr
+              %td{style: 'padding: 40px;'}
+                %p{style: 'margin: 0 0 20px 0; font-size: 14px; color: #666;'}
+                  Hello #{@user.full_name},
+
+                %p{style: 'margin: 0 0 30px 0; font-size: 14px; color: #666; line-height: 1.6;'}
+                  The following task in your project has been completed:
+
+                / Project Info
+                %p{style: 'margin: 0 0 20px 0; font-size: 13px; color: #999;'}
+                  Project: #{@project.name}
+
+                / Success Box
+                %table{cellpadding: '0', cellspacing: '0', style: 'width: 100%; background-color: #e8f5e9; border-left: 4px solid #4caf50; margin: 30px 0;'}
+                  %tbody
+                    %tr
+                      %td{style: 'padding: 20px;'}
+                        %p{style: 'margin: 0 0 15px 0; font-weight: bold; color: #333; font-size: 16px;'}
+                          = @task.title
+                        %p{style: 'margin: 0 0 10px 0; color: #666; font-size: 13px;'}
+                          %span{style: 'display: inline-block; background-color: #4caf50; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px;'}
+                            ✓ Completed
+                        - if @task.due_date.present?
+                          %p{style: 'margin: 0; color: #666; font-size: 13px;'}
+                            %strong Due Date:
+                            = @task.due_date.strftime('%B %d, %Y')
+
+                / Progress Update
+                %p{style: 'margin: 20px 0 0 0; font-size: 13px; color: #666; border-top: 1px solid #e0e0e0; padding-top: 20px;'}
+                  %strong Project Progress:
+                %p{style: 'margin: 10px 0 0 0; font-size: 13px; color: #666;'}
+                  - completed = @project.tasks.where(status: 'Done').count
+                  - total = @project.tasks.count
+                  = "#{completed} of #{total} tasks completed (#{@project.completion_percentage.to_i}%)"
+
+                / CTA Button
+                %table{cellpadding: '0', cellspacing: '0', style: 'margin: 30px 0; text-align: center;'}
+                  %tbody
+                    %tr
+                      %td
+                        %a.btn{href: @action_url, style: 'display: inline-block; background-color: #4caf50; color: white; text-decoration: none; padding: 12px 30px; border-radius: 4px; font-weight: bold; font-size: 14px; transition: background-color 0.3s;'}
+                          View Project
+
+            / Footer
+            %tr
+              %td{style: 'background-color: #f5f5f5; padding: 30px; text-align: center; border-top: 1px solid #e0e0e0;'}
+                %p{style: 'margin: 0 0 10px 0; font-size: 12px; color: #999;'}
+                  This is an automated notification from PM App
+                %p{style: 'margin: 0; font-size: 11px; color: #bbb;'}
+                  © 2025 PM App. All rights reserved.

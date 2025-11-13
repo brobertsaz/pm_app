@@ -1,0 +1,24 @@
+Hello #{@user.full_name},
+
+New Task Created
+================
+
+A new task has been created in your project:
+
+Project: #{@project.name}
+
+Task Title: #{@task.title}
+Status: #{@task.status || 'To Do'}
+Priority: #{@task.priority || 'Medium'}
+- if @task.due_date.present?
+  Due Date: #{@task.due_date.strftime('%B %d, %Y')}
+
+- if @task.description.present?
+  Description:
+  #{@task.description}
+
+View this task: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

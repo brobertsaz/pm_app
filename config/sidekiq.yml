@@ -1,0 +1,30 @@
+---
+:port: 6379
+:concurrency: 5
+:timeout: 25
+:verbose: false
+
+development:
+  :concurrency: 2
+
+production:
+  :concurrency: 10
+  :timeout: 30
+
+:queues:
+  - [notifications, 10]
+  - [reminders, 5]
+  - [default, 1]
+
+:max_retries: 5
+:dead_letter_queue:
+  enabled: true
+  max_poll_interval: 60
+
+# Scheduled Jobs
+:schedule:
+  deadline_reminder_job:
+    cron: '0 9 * * *'  # Run daily at 9 AM
+    class: DeadlineReminderJob
+    queue: reminders
+    description: "Check for upcoming project and task deadlines"

@@ -1,0 +1,26 @@
+Hello #{@user.full_name},
+
+Overdue Task
+============
+
+ALERT: This task is now overdue!
+
+Project: #{@project.name}
+
+Task Title: #{@task.title}
+Status: #{@task.status}
+Due Date: #{@task.due_date.strftime('%B %d, %Y')}
+- if @days_overdue.present?
+  OVERDUE: #{@days_overdue} days
+
+- if @task.description.present?
+  Description:
+  #{@task.description}
+
+Please complete this task as soon as possible or update the due date if needed.
+
+View this task: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

@@ -1,0 +1,28 @@
+Hello #{@user.full_name},
+
+Task Assigned to You
+====================
+
+You have been assigned the following task:
+
+Project: #{@project.name}
+
+Task Title: #{@task.title}
+Priority: #{@task.priority || 'Medium'}
+- if @task.due_date.present?
+  Due Date: #{@task.due_date.strftime('%B %d, %Y')}
+  - days_left = (@task.due_date - Date.today).to_i
+  - if days_left >= 0
+    (#{days_left} days remaining)
+  - else
+    (#{-days_left} days overdue)
+
+- if @task.description.present?
+  Description:
+  #{@task.description}
+
+View this task: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.
