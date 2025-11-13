@@ -1,0 +1,25 @@
+Hello #{@user.full_name},
+
+Deadline Reminder
+=================
+
+A project deadline is approaching!
+
+Project Name: #{@project.name}
+Status: #{@project.status || 'Not Started'}
+- if @days_until_due.present?
+  Time Remaining: #{@days_until_due > 1 ? "#{@days_until_due} days" : "Due Tomorrow"}
+Due Date: #{@project.due_date.strftime('%A, %B %d, %Y')}
+Progress: #{@project.completion_percentage.to_i}%
+
+- if @project.tasks.any?
+  Task Progress:
+  - completed = @project.tasks.where(status: 'Done').count
+  - total = @project.tasks.count
+  #{completed} of #{total} tasks completed
+
+View this project: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

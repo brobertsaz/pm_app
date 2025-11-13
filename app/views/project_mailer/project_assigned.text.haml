@@ -1,0 +1,27 @@
+Hello #{@user.full_name},
+
+Project Assignment
+==================
+
+You have been assigned to the following project:
+
+Project Name: #{@project.name}
+Status: #{@project.status || 'Not Started'}
+Priority: #{@project.priority || 'Medium'}
+- if @project.due_date.present?
+  Due Date: #{@project.due_date.strftime('%B %d, %Y')}
+
+- if @project.description.present?
+  Description:
+  #{@project.description}
+
+- if @project.members.any?
+  Team Members:
+  - @project.members.each do |member|
+    • #{member.full_name}
+
+View this project: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

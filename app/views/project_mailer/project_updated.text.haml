@@ -1,0 +1,19 @@
+Hello #{@user.full_name},
+
+Project Updated
+===============
+
+The following project has been updated:
+
+Project Name: #{@project.name}
+Status: #{@project.status || 'Not Started'}
+Priority: #{@project.priority || 'Medium'}
+Progress: #{@project.completion_percentage.to_i}%
+- if @project.due_date.present?
+  Due Date: #{@project.due_date.strftime('%B %d, %Y')}
+
+View this project: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

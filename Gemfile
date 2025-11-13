@@ -50,6 +50,13 @@ gem 'haml-rails', '~> 2.1'
 # Pagination
 gem 'kaminari'
 
+# CSV exports
+gem 'csv', '~> 3.2'
+
+# PDF generation
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 group :development, :test do
   # Debugging
   gem 'debug', platforms: %i[ mri mingw x64_mingw ]
@@ -71,3 +78,10 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Background jobs
+gem 'sidekiq', '~> 7.0'
+gem 'sidekiq-scheduler', '~> 5.0'
+
+# Email delivery
+gem 'letter_opener', group: :development

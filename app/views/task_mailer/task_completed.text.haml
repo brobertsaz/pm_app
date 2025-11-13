@@ -1,0 +1,24 @@
+Hello #{@user.full_name},
+
+Task Completed
+==============
+
+Great work! The following task has been completed:
+
+Project: #{@project.name}
+
+Task Title: #{@task.title}
+Status: Done
+- if @task.due_date.present?
+  Due Date: #{@task.due_date.strftime('%B %d, %Y')}
+
+Project Progress:
+- completed = @project.tasks.where(status: 'Done').count
+- total = @project.tasks.count
+#{completed} of #{total} tasks completed (#{@project.completion_percentage.to_i}%)
+
+View this project: #{@action_url}
+
+---
+This is an automated notification from PM App
+© 2025 PM App. All rights reserved.

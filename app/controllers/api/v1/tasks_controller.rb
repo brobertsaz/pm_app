@@ -1,15 +1,23 @@
 module Api
   module V1
     class TasksController < BaseController
-      before_action :set_project
+      before_action :set_project, only: [:show, :create, :update, :destroy]
       before_action :set_task, only: [:show, :update, :destroy]
       before_action :authorize_project, only: [:create, :update, :destroy]
 
       def index
-        @tasks = @project.tasks.ordered
+        if params[:project_id].present?
+          # Get tasks for a specific project
+          @tasks = @project.tasks.ordered
+        else
+          # Get all tasks for current user across all projects
+          @tasks = policy_scope(Task).ordered
+        end
+
         render json: @tasks.as_json(
           include: {
-            user: { only: [:id, :email] }
+            user: { only: [:id, :email] },
+            project: { only: [:id, :name] }
           },
           methods: [:overdue?, :completed?]
         )

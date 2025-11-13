@@ -1,0 +1,71 @@
+%div.content
+  %h1= @project.name
+
+  %div.summary-box
+    %div.summary-row
+      %div.summary-value= @project.status
+      %div.summary-label Status
+    %div.summary-row
+      %div.summary-value= @project.priority
+      %div.summary-label Priority
+    %div.summary-row
+      %div.summary-value= "#{@project.completion_percentage}%"
+      %div.summary-label Completion
+    %div.summary-row
+      %div.summary-value= @project.due_date&.strftime('%b %d, %Y') || 'N/A'
+      %div.summary-label Due Date
+
+  %h2 Project Details
+
+  %table
+    %tr
+      %th Description
+      %td= @project.description
+    %tr
+      %th Owner
+      %td= @project.user&.email || 'N/A'
+    %tr
+      %th Created
+      %td= @project.created_at&.strftime('%b %d, %Y at %I:%M %p')
+    %tr
+      %th Last Updated
+      %td= @project.updated_at&.strftime('%b %d, %Y at %I:%M %p')
+
+  %h2 Tasks (#{@project.tasks.count})
+
+  - if @project.tasks.any?
+    %table
+      %thead
+        %tr
+          %th ID
+          %th Title
+          %th Status
+          %th Priority
+          %th Due Date
+      %tbody
+        - @project.tasks.ordered.each do |task|
+          %tr
+            %td= task.id
+            %td= task.title
+            %td
+              - case task.status
+              - when 'Done'
+                %span.badge.badge-success= task.status
+              - when 'In Progress'
+                %span.badge.badge-info= task.status
+              - when 'To Do'
+                %span.badge.badge-warning= task.status
+            %td
+              - case task.priority
+              - when 'High'
+                %span.badge.badge-danger= task.priority
+              - when 'Medium'
+                %span.badge.badge-warning= task.priority
+              - when 'Low'
+                %span.badge.badge-success= task.priority
+            %td= task.due_date&.strftime('%b %d, %Y') || 'N/A'
+  - else
+    %p.no-data No tasks for this project
+
+  %div.footer
+    %p Generated on #{Time.zone.now.strftime('%B %d, %Y at %I:%M %p')}

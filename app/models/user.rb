@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :projects, dependent: :destroy
   has_many :tasks, dependent: :nullify
+  has_many :comments, dependent: :destroy
+  has_many :project_templates, dependent: :destroy
 
   validates :email, presence: true, uniqueness: true
 

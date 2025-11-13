@@ -1,0 +1,112 @@
+%div.content
+  %h1= "#{@project.name} - Comprehensive Report"
+
+  %div.summary-box
+    %div.summary-row
+      %div.summary-value= @completed_tasks
+      %div.summary-label Completed Tasks
+    %div.summary-row
+      %div.summary-value= @tasks.count - @completed_tasks
+      %div.summary-label Remaining Tasks
+    %div.summary-row
+      %div.summary-value= number_with_precision(@total_hours, precision: 1)
+      %div.summary-label Total Hours Logged
+    %div.summary-row
+      %div.summary-value= @project.completion_percentage
+      %div.summary-label % Complete
+
+  %h2 Executive Summary
+
+  %table
+    %tr
+      %th Property
+      %th Value
+    %tr
+      %td Status
+      %td= @project.status
+    %tr
+      %td Priority
+      %td= @project.priority
+    %tr
+      %td Owner
+      %td= @project.user&.email || 'N/A'
+    %tr
+      %td Due Date
+      %td= @project.due_date&.strftime('%B %d, %Y') || 'No deadline'
+    %tr
+      %td Description
+      %td= @project.description
+    %tr
+      %td Created
+      %td= @project.created_at&.strftime('%B %d, %Y')
+    %tr
+      %td Last Modified
+      %td= @project.updated_at&.strftime('%B %d, %Y at %I:%M %p')
+
+  %h2 Task Breakdown
+
+  - if @tasks.any?
+    %table
+      %thead
+        %tr
+          %th Task ID
+          %th Title
+          %th Status
+          %th Priority
+          %th Assignee
+          %th Due Date
+          %th Hours Logged
+      %tbody
+        - @tasks.each do |task|
+          %tr
+            %td= task.id
+            %td= task.title
+            %td
+              - case task.status
+              - when 'Done'
+                %span.badge.badge-success= task.status
+              - when 'In Progress'
+                %span.badge.badge-info= task.status
+              - when 'To Do'
+                %span.badge.badge-warning= task.status
+            %td
+              - case task.priority
+              - when 'High'
+                %span.badge.badge-danger= task.priority
+              - when 'Medium'
+                %span.badge.badge-warning= task.priority
+              - when 'Low'
+                %span.badge.badge-success= task.priority
+            %td= task.user&.email || 'Unassigned'
+            %td= task.due_date&.strftime('%b %d, %Y') || 'N/A'
+            %td= number_with_precision(task.total_time_logged, precision: 1)
+  - else
+    %p.no-data No tasks in this project
+
+  %h2 Time Tracking Summary
+
+  - if @time_entries.any?
+    %table
+      %thead
+        %tr
+          %th Date
+          %th Task
+          %th User
+          %th Hours
+          %th Description
+      %tbody
+        - @time_entries.order(logged_date: :desc).each do |entry|
+          %tr
+            %td= entry.logged_date&.strftime('%b %d, %Y')
+            %td= entry.task.title
+            %td= entry.user.email
+            %td= number_with_precision(entry.hours, precision: 2)
+            %td= truncate(entry.description, length: 40)
+  - else
+    %p.no-data No time entries for this project
+
+  %div.footer
+    %p
+      Generated on #{Time.zone.now.strftime('%B %d, %Y at %I:%M %p')}
+      %br
+      Project Report for #{@project.name}
